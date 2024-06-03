@@ -29,6 +29,16 @@ import { ConfigModule } from '@nestjs/config';
       //Mientras que, con esta se caragran automaticamente todas las entitdades que encuentre
       autoLoadEntities: true,
       synchronize: true,
+      ssl: process.env.POSTGRES_SSL === "true",
+      extra: {
+        ssl:
+          process.env.POSTGRES_SSL === "true"
+            ? {
+              //De lo que se encarga esto, es que. El certificado SSL no debe de estar comprobado
+                rejectUnauthorized: false,
+              }
+            : null,
+      },
     }),
     UsersModule,
     AuthModule,
